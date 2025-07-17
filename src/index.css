@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer components {
+  .card {
+    @apply bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-6 shadow-xl;
+  }
+  
+  .nav-item {
+    @apply w-full flex items-center px-4 py-3 rounded-xl text-left transition-all;
+  }
+  
+  .nav-item-active {
+    @apply bg-smart-green-700 text-white shadow-lg;
+  }
+  
+  .nav-item-inactive {
+    @apply text-green-100 hover:bg-smart-green-500 hover:bg-opacity-50;
+  }
+}
