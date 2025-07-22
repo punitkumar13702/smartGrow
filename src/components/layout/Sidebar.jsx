@@ -1,35 +1,35 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
-  Home, 
-  Leaf, 
-  Sparkles, 
-  Tag, 
-  Settings
+  Home,
+  Leaf,
+  Sparkles,
+  Tag,
+  Settings,
+  X
 } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ isMobile = false, onClose = () => {} }) => {
   const navigationItems = [
     { name: 'Dashboard', path: '/dashboard', icon: Home },
     { name: 'Garden', path: '/garden', icon: Leaf },
     { name: 'Planto AI', path: '/planto-ai', icon: Sparkles },
-    { name: 'Market Link', path: '/market-link', icon: Tag },
+    { name: 'GrowwMart', path: '/growwmart', icon: Tag },
     { name: 'Settings', path: '/settings', icon: Settings }
   ];
 
-  // FIXED: Logo aligned to TOP instead of center
   const CustomSmartGrowLogo = () => (
-    <div className="flex items-start justify-center mb-4">  {/* Changed from items-center to items-start */}
+    <div className="flex items-start justify-center mb-6">
       <div className="text-center">
-        <div className="mb-3">
+        <div className="mb-4">
           <img 
-            src="/images/LogoSG.png"  
+            src="/images/LogoSG.png"
             alt="Smart Grow Logo"
-            className="mx-auto drop-shadow-lg rounded-lg object-contain"
+            className="mx-auto drop-shadow-2xl rounded-2xl object-contain transform hover:scale-105 transition-transform duration-300"
             style={{ 
-              width: '130px',           
-              height: '80px',          
-              objectFit: 'contain'     
+              width: isMobile ? '120px' : '130px',         
+              height: isMobile ? '70px' : '80px',        
+              objectFit: 'contain'   
             }}
             onError={(e) => {
               console.log('Logo failed to load');
@@ -37,26 +37,105 @@ const Sidebar = () => {
               e.target.nextSibling.style.display = 'block';
             }}
           />
-          <div className="hidden w-20 h-20 mx-auto bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
-            <span className="text-white font-bold text-xl">SG</span>
+          <div className="hidden w-24 h-24 mx-auto bg-white bg-opacity-25 rounded-2xl flex items-center justify-center shadow-xl border border-white border-opacity-20">
+            <span className="text-white font-bold text-2xl">SG</span>
           </div>
         </div>
       </div>
     </div>
   );
 
+  const handleNavClick = () => {
+    if (isMobile) {
+      setTimeout(() => {
+        onClose();
+      }, 100);
+    }
+  };
+
+  if (isMobile) {
+    return (
+      <div className="w-full min-h-screen p-6 pb-8 relative">
+        {/* Close Button */}
+        <div className="flex justify-end mb-6 sticky top-0 z-10">
+          <button
+            onClick={onClose}
+            className="p-4 rounded-2xl bg-white bg-opacity-25 text-white hover:bg-opacity-35 transition-all duration-300 shadow-xl border border-white border-opacity-30 hover:scale-110 hover:rotate-90"
+          >
+            <X className="w-7 h-7" />
+          </button>
+        </div>
+
+        {/* Logo */}
+        <CustomSmartGrowLogo />
+
+        {/* Navigation */}
+        <nav className="space-y-4 mb-8">
+          {navigationItems.map((item, index) => (
+            <NavLink
+              key={item.name}
+              to={item.path}
+              onClick={handleNavClick}
+              className={({ isActive }) =>
+                `w-full flex items-center px-6 py-4 rounded-2xl text-left transition-all duration-300 transform hover:scale-105 ${
+                  isActive
+                    ? 'bg-white bg-opacity-30 text-white shadow-2xl scale-105 backdrop-blur-sm border-2 border-white border-opacity-50'
+                    : 'text-white text-opacity-95 hover:bg-white hover:bg-opacity-20 hover:text-white hover:shadow-xl'
+                } text-lg`
+              }
+              style={{ 
+                animationDelay: `${index * 0.1}s`,
+                animationFillMode: 'both'
+              }}
+            >
+              <item.icon className="w-7 h-7 mr-4" />
+              <span className="font-semibold">{item.name}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        {/* Status Indicator */}
+        <div className="mb-8 p-5 bg-white bg-opacity-25 rounded-2xl backdrop-blur-sm border border-white border-opacity-40 shadow-xl">
+          <div className="flex items-center space-x-3 text-white">
+            <div className="w-3 h-3 rounded-full bg-green-300 animate-pulse shadow-xl ring-2 ring-green-200" />
+            <span className="font-semibold text-lg">System Online</span>
+          </div>
+          <div className="text-sm text-white text-opacity-80 mt-2">
+            All sensors connected and monitoring
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center space-y-3">
+          <div className="text-white text-opacity-80 text-base italic font-medium">
+            "Growing Smart, Growing Green"
+          </div>
+          <div className="text-white text-opacity-60 text-sm">
+            Smart Grow v1.0.0
+          </div>
+          <div className="text-white text-opacity-40 text-xs">
+            Hydroponic Innovation
+          </div>
+        </div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-20 right-10 w-20 h-20 bg-white bg-opacity-10 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-20 left-10 w-16 h-16 bg-white bg-opacity-5 rounded-full blur-xl"></div>
+      </div>
+    );
+  }
+
+  // Desktop Sidebar (unchanged)
   return (
     <div 
-      className="w-72 p-6 shadow-2xl border-r border-white border-opacity-20"
+      className="w-72 p-6 shadow-2xl border-r border-white border-opacity-20 h-full"
       style={{
         background: `linear-gradient(180deg, rgba(169, 244, 83, 0.80) 0%, rgba(51, 113, 10, 0.80) 100%)`,
       }}
     >
-      {/* Logo aligned to top */}
       <CustomSmartGrowLogo />
 
-      {/* Enhanced Navigation */}
-      <nav className="space-y-3">
+      <nav className="space-y-3 mb-8">
         {navigationItems.map((item) => (
           <NavLink
             key={item.name}
@@ -75,8 +154,7 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      {/* Enhanced Status Indicator */}
-      <div className="mt-8 p-4 bg-white bg-opacity-20 rounded-xl backdrop-blur-sm border border-white border-opacity-30">
+      <div className="mb-6 p-4 bg-white bg-opacity-20 rounded-xl backdrop-blur-sm border border-white border-opacity-30">
         <div className="flex items-center space-x-2 text-white text-sm">
           <div className="w-2 h-2 rounded-full bg-green-300 animate-pulse shadow-lg" />
           <span className="font-medium">System Online</span>
@@ -86,8 +164,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Company Tagline */}
-      <div className="mt-6 text-center">
+      <div className="text-center">
         <div className="text-white text-opacity-60 text-xs italic">
           "Growing Smart, Growing Green"
         </div>

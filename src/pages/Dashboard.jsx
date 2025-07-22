@@ -7,51 +7,77 @@ import PerformanceInsights from '../components/dashboard/PerformanceInsights';
 
 const Dashboard = () => {
   return (
-    <div className="h-full flex flex-col">
-      {/* Custom Header with New Styling */}
-      <div className="flex justify-between items-center mb-4 flex-shrink-0">
-        <div>
-          <h1 className="text-4xl font-light text-green-800 drop-shadow-sm">Dashboard</h1>
-          <p className="text-green-700 text-opacity-80 text-sm mt-1">Real-time hydroponic monitoring</p>
-        </div>
-        <div className="flex items-center space-x-3">
-          <span className="text-green-800 text-lg font-medium drop-shadow-sm">Hi, Eren</span>
-          <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
-            <span className="text-white font-semibold text-sm">E</span>
+    <div className="h-full overflow-y-auto">
+      {/* Full Page Scrollable Container */}
+      <div className="space-y-4 pb-6">
+        
+        {/* Header - Responsive */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
+          <div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-light text-green-800 drop-shadow-sm">
+              Dashboard
+            </h1>
+            <p className="text-green-700 text-opacity-80 text-xs sm:text-sm mt-1">
+              Real-time hydroponic monitoring
+            </p>
+          </div>
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <span className="text-green-800 text-sm sm:text-lg font-medium drop-shadow-sm">
+              Hi, Eren
+            </span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+              <span className="text-white font-semibold text-xs sm:text-sm">E</span>
+            </div>
           </div>
         </div>
-      </div>
-      
-      {/* Dashboard Grid with Enhanced Styling */}
-      <div className="grid grid-cols-2 gap-4 flex-1 min-h-0">
-        
-        {/* Garden Overview */}
-        <div className="min-h-0">
-          <GardenOverview />
-        </div>
 
-        {/* Right Column */}
-        <div className="flex flex-col gap-4 min-h-0">
-          {/* Sensor Data */}
-          <div className="flex-shrink-0">
+        {/* Dashboard Components - Mobile: Stack Vertically, Desktop: Grid */}
+        
+        {/* Mobile Layout - Single Column */}
+        <div className="ck lg:hidden space-y-4">
+          <div>
+            <GardenOverview />
+          </div>
+          <div>
             <SensorData />
           </div>
-
-          {/* Crop Health AI Alerts */}
-          <div className="flex-1 min-h-0">
+          <div>
             <CropHealthAlerts />
+          </div>
+          <div>
+            <PlantoAI />
+          </div>
+          <div>
+            <PerformanceInsights />
           </div>
         </div>
 
-        {/* Bottom Left - AI Recommendations */}
-        <div className="min-h-0">
-          <PlantoAI />
+        {/* Desktop Layout - Grid */}
+        <div className="hidden lg:grid lg:grid-cols-2 lg:gap-4">
+          {/* Top Row */}
+          <div>
+            <GardenOverview />
+          </div>
+          
+          <div className="space-y-4">
+            <div>
+              <SensorData />
+            </div>
+            <div>
+              <CropHealthAlerts />
+            </div>
+          </div>
+
+          {/* Bottom Row */}
+          <div>
+            <PlantoAI />
+          </div>
+          
+          <div>
+            <PerformanceInsights />
+          </div>
         </div>
 
-        {/* Bottom Right - Performance */}
-        <div className="min-h-0">
-          <PerformanceInsights />
-        </div>
       </div>
     </div>
   );

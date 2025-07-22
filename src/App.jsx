@@ -6,7 +6,7 @@ import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
 import Garden from './pages/Garden';
 import PlantoAI from './pages/PlantoAI';
-import MarketLink from './pages/MarketLink';
+import GrowwMart from './pages/GrowwMart';
 import Settings from './pages/Settings';
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/garden" element={<Garden />} />
               <Route path="/planto-ai" element={<PlantoAI />} />
-              <Route path="/market-link" element={<MarketLink />} />
+              <Route path="/growwmart" element={<GrowwMart />} />
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </Layout>
