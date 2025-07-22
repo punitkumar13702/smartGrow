@@ -1,69 +1,67 @@
-import React from "react";
-import { ChevronRight, Leaf } from "lucide-react";
-import { useApp } from "../../context/AppContext";
+import React from 'react';
+import { ChevronRight } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
 
 const GardenOverview = () => {
   const { gardenData } = useApp();
 
   return (
-    <div className="bg-green-100 bg-opacity-90 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-      <h2 className="text-2xl font-semibold text-smart-green-800 mb-6">
-        Garden Overview
-      </h2>
-
-      <div className="flex items-center space-x-8">
-        {/* Garden Illustration */}
-        <div className="bg-smart-green-200 rounded-2xl p-6 flex-shrink-0">
-          <div className="w-32 h-40 relative">
-            <div className="absolute inset-0 bg-gray-200 rounded-lg border-4 border-gray-300">
-              {/* Shelves with plants */}
-              {[0, 1, 2].map((shelf) => (
-                <div
-                  key={shelf}
-                  className={`absolute left-2 right-2 h-8 bg-smart-green-500 rounded flex items-center justify-center ${
-                    shelf === 0 ? "top-2" : shelf === 1 ? "top-14" : "bottom-2"
-                  }`}
-                >
-                  <div className="flex space-x-1">
-                    {[...Array(6)].map((_, i) => (
-                      <Leaf key={i} className="w-3 h-3 text-smart-green-700" />
-                    ))}
-                  </div>
-                </div>
-              ))}
+    <div className="bg-white bg-opacity-90 rounded-2xl p-4 shadow-xl border border-white border-opacity-30 hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
+      <h2 className="text-xl font-semibold text-green-800 mb-4">Garden Overview</h2>
+      
+      {/* Content area - flex-1 to take available space */}
+      <div className="flex items-stretch space-x-4 flex-1">
+        
+        {/* Large Hydroponic System Image */}
+        <div className="flex-[0.6] bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-4 shadow-inner flex items-center justify-center">
+          <div className="w-full h-full flex items-center justify-center">
+            <img 
+              src="/images/Structure_Hydroponic.jpg"
+              alt="Hydroponic System"
+              className="w-full h-full object-contain rounded-xl drop-shadow-lg"
+              style={{ maxHeight: '200px', maxWidth: '100%' }}
+              onError={(e) => {
+                console.log('Image failed to load');
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'block';
+              }}
+            />
+            {/* Fallback */}
+            <div className="hidden w-full h-full bg-green-50 rounded-xl flex items-center justify-center">
+              <div className="text-green-600 text-center">
+                <div className="text-4xl mb-2">🌱</div>
+                <div className="text-sm">Hydroponic System</div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="space-y-6 flex-1">
-          <div className="flex justify-between items-center">
-            <span className="text-gray-600 text-lg">Garden</span>
-            <span className="text-3xl font-bold text-smart-green-800">
-              {gardenData.gardens}
-            </span>
+        {/* Stats Section - Right aligned */}
+        <div className="flex-[0.4] flex flex-col justify-between min-w-0">
+          {/* Stats */}
+          <div className="space-y-3">
+            <div className="flex justify-between items-center p-3 bg-green-50 rounded-xl">
+              <span className="text-gray-700 text-sm font-medium">Gardens</span>
+              <span className="text-2xl font-bold text-green-800">{gardenData.gardens}</span>
+            </div>
+            <div className="flex justify-between items-center p-3 bg-green-50 rounded-xl">
+              <span className="text-gray-700 text-sm font-medium">Plants</span>
+              <span className="text-2xl font-bold text-green-800">{gardenData.plants}</span>
+            </div>
+            <div className="flex justify-between items-center p-3 bg-green-50 rounded-xl">
+              <span className="text-gray-700 text-sm font-medium">Growth</span>
+              <span className="text-2xl font-bold text-green-800">{gardenData.growth}%</span>
+            </div>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-gray-600 text-lg">Plants</span>
-            <span className="text-3xl font-bold text-smart-green-800">
-              {gardenData.plants}
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-gray-600 text-lg">Growth</span>
-            <span className="text-3xl font-bold text-smart-green-800">
-              {gardenData.growth}%
-            </span>
+
+          {/* Assert Button - Positioned at bottom right */}
+          <div className="flex justify-end mt-4">
+            <button className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm">
+              <span className="font-semibold">Assert</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
-      </div>
-
-      {/* Assert Button */}
-      <div className="mt-8 flex justify-end">
-        <button className="bg-smart-green-600 text-white px-6 py-3 rounded-full flex items-center space-x-2 hover:bg-smart-green-700 transition-colors">
-          <span className="font-semibold">Assert</span>
-          <ChevronRight className="w-5 h-5" />
-        </button>
       </div>
     </div>
   );
