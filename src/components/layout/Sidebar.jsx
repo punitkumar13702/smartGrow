@@ -55,72 +55,80 @@ const Sidebar = ({ isMobile = false, onClose = () => {} }) => {
 
   if (isMobile) {
     return (
-      <div className="w-full min-h-screen p-6 pb-8 relative">
-        {/* Close Button */}
-        <div className="flex justify-end mb-6 sticky top-0 z-10">
+      <div className="w-full min-h-screen flex flex-col p-6 relative">
+        {/* Close Button - Fixed at top right */}
+        <div className="flex justify-end mb-4 flex-shrink-0">
           <button
             onClick={onClose}
-            className="p-4 rounded-2xl bg-white bg-opacity-25 text-white hover:bg-opacity-35 transition-all duration-300 shadow-xl border border-white border-opacity-30 hover:scale-110 hover:rotate-90"
+            className="p-3 rounded-2xl bg-white bg-opacity-25 text-white hover:bg-opacity-35 transition-all duration-300 shadow-xl border border-white border-opacity-30 hover:scale-110 hover:rotate-90"
           >
-            <X className="w-7 h-7" />
+            <X className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Logo */}
-        <CustomSmartGrowLogo />
+        {/* Logo - Fixed */}
+        <div className="flex-shrink-0 mb-6">
+          <CustomSmartGrowLogo />
+        </div>
 
-        {/* Navigation */}
-        <nav className="space-y-4 mb-8">
+        {/* Navigation - Compact vertical layout */}
+        <nav className="flex-1 space-y-3 mb-6">
           {navigationItems.map((item, index) => (
             <NavLink
               key={item.name}
               to={item.path}
               onClick={handleNavClick}
               className={({ isActive }) =>
-                `w-full flex items-center px-6 py-4 rounded-2xl text-left transition-all duration-300 transform hover:scale-105 ${
+                `w-full flex items-center px-5 py-3 rounded-xl text-left transition-all duration-300 transform hover:scale-105 ${
                   isActive
                     ? 'bg-white bg-opacity-30 text-white shadow-2xl scale-105 backdrop-blur-sm border-2 border-white border-opacity-50'
                     : 'text-white text-opacity-95 hover:bg-white hover:bg-opacity-20 hover:text-white hover:shadow-xl'
-                } text-lg`
+                } text-base`
               }
               style={{ 
                 animationDelay: `${index * 0.1}s`,
                 animationFillMode: 'both'
               }}
             >
-              <item.icon className="w-7 h-7 mr-4" />
+              <item.icon className="w-6 h-6 mr-3" />
               <span className="font-semibold">{item.name}</span>
             </NavLink>
           ))}
         </nav>
 
-        {/* Status Indicator */}
-        <div className="mb-8 p-5 bg-white bg-opacity-25 rounded-2xl backdrop-blur-sm border border-white border-opacity-40 shadow-xl">
-          <div className="flex items-center space-x-3 text-white">
-            <div className="w-3 h-3 rounded-full bg-green-300 animate-pulse shadow-xl ring-2 ring-green-200" />
-            <span className="font-semibold text-lg">System Online</span>
+        {/* Status and Footer - Compact layout */}
+        <div className="flex-shrink-0 space-y-4">
+          {/* Status Indicator - More compact */}
+          <div 
+            className="p-4 rounded-xl backdrop-blur-sm border border-white border-opacity-40 shadow-xl"
+            style={{
+              // ADJUST THIS VALUE TO CHANGE STATUS BOX TRANSPARENCY IN NAVBAR
+              backgroundColor: 'rgba(255, 255, 255, 0.20)' // Change 0.20 to any value between 0.1-0.4
+            }}
+          >
+            <div className="flex items-center space-x-3 text-white">
+              <div className="w-3 h-3 rounded-full bg-green-300 animate-pulse shadow-xl ring-2 ring-green-200" />
+              <span className="font-semibold">System Online</span>
+            </div>
+            <div className="text-sm text-white text-opacity-80 mt-1">
+              All sensors connected
+            </div>
           </div>
-          <div className="text-sm text-white text-opacity-80 mt-2">
-            All sensors connected and monitoring
-          </div>
-        </div>
 
-        {/* Footer */}
-        <div className="text-center space-y-3">
-          <div className="text-white text-opacity-80 text-base italic font-medium">
-            "Growing Smart, Growing Green"
-          </div>
-          <div className="text-white text-opacity-60 text-sm">
-            Smart Grow v1.0.0
-          </div>
-          <div className="text-white text-opacity-40 text-xs">
-            Hydroponic Innovation
+          {/* Footer - More compact */}
+          <div className="text-center space-y-2">
+            <div className="text-white text-opacity-80 text-sm italic font-medium">
+              "Growing Smart, Growing Green"
+            </div>
+            <div className="text-white text-opacity-60 text-xs">
+              Smart Grow v1.0.0
+            </div>
           </div>
         </div>
 
         {/* Decorative elements */}
-        <div className="absolute top-20 right-10 w-20 h-20 bg-white bg-opacity-10 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-20 left-10 w-16 h-16 bg-white bg-opacity-5 rounded-full blur-xl"></div>
+        <div className="absolute top-16 right-8 w-16 h-16 bg-white bg-opacity-10 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-16 left-8 w-12 h-12 bg-white bg-opacity-5 rounded-full blur-xl"></div>
       </div>
     );
   }

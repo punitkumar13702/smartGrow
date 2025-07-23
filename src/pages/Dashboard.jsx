@@ -7,11 +7,9 @@ import PerformanceInsights from '../components/dashboard/PerformanceInsights';
 
 const Dashboard = () => {
   return (
-    <div className="h-full overflow-y-auto">
-      {/* Full Page Scrollable Container */}
-      <div className="space-y-4 pb-6">
-        
-        {/* Header - Responsive */}
+    <div className="h-full flex flex-col">
+      {/* Fixed Header - Responsive */}
+      <div className="flex-shrink-0 mb-4 lg:mb-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-light text-green-800 drop-shadow-sm">
@@ -21,20 +19,19 @@ const Dashboard = () => {
               Real-time hydroponic monitoring
             </p>
           </div>
-          <div className="flex items-center space-x-2 sm:space-x-3">
+          {/* Simple Hi Eren text - no avatar */}
+          <div className="flex items-center">
             <span className="text-green-800 text-sm sm:text-lg font-medium drop-shadow-sm">
               Hi, Eren
             </span>
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
-              <span className="text-white font-semibold text-xs sm:text-sm">E</span>
-            </div>
           </div>
         </div>
+      </div>
 
-        {/* Dashboard Components - Mobile: Stack Vertically, Desktop: Grid */}
-        
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto space-y-4 sm:space-y-6">
         {/* Mobile Layout - Single Column */}
-        <div className="ck lg:hidden space-y-4">
+        <div className="block lg:hidden space-y-4">
           <div>
             <GardenOverview />
           </div>
@@ -53,7 +50,7 @@ const Dashboard = () => {
         </div>
 
         {/* Desktop Layout - Grid */}
-        <div className="hidden lg:grid lg:grid-cols-2 lg:gap-4">
+        <div className="hidden lg:grid lg:grid-cols-2 lg:gap-6">
           {/* Top Row */}
           <div>
             <GardenOverview />
@@ -77,7 +74,6 @@ const Dashboard = () => {
             <PerformanceInsights />
           </div>
         </div>
-
       </div>
     </div>
   );

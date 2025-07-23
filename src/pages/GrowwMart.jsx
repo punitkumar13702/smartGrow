@@ -210,11 +210,9 @@ const GrowwMart = () => {
   };
 
   return (
-    <div className="h-full overflow-y-auto">
-      {/* Full Page Scrollable Container */}
-      <div className="space-y-4 pb-6">
-        
-        {/* Header Section - Mobile Optimized */}
+    <div className="h-full flex flex-col">
+      {/* Fixed Header - Responsive */}
+      <div className="flex-shrink-0 mb-4 lg:mb-6">
         <div className="space-y-4">
           {/* Title and Action Buttons */}
           <div className="flex flex-col space-y-3">
@@ -284,7 +282,10 @@ const GrowwMart = () => {
             </div>
           </div>
         </div>
+      </div>
 
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto space-y-4 sm:space-y-6">
         {/* Search and Filter Section */}
         <div className="bg-white bg-opacity-90 rounded-xl p-4 sm:p-6 shadow-lg">
           <div className="flex flex-col space-y-3">
@@ -418,7 +419,6 @@ const GrowwMart = () => {
             </div>
           )}
         </div>
-
       </div>
 
       {/* Favorites Popup - Enhanced */}

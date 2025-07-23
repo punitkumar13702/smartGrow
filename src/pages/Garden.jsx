@@ -6,11 +6,9 @@ const Garden = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <div className="h-full overflow-y-auto">
-      {/* Full Page Scrollable Container */}
-      <div className="space-y-4 pb-6">
-        
-        {/* Header Section */}
+    <div className="h-full flex flex-col">
+      {/* Fixed Header - Responsive */}
+      <div className="flex-shrink-0 mb-4 lg:mb-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0">
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-light text-green-800 drop-shadow-sm">
@@ -27,7 +25,10 @@ const Garden = () => {
             </div>
           </div>
         </div>
+      </div>
 
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto space-y-4 sm:space-y-6">
         {/* Stats Overview */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
           <div className="bg-white bg-opacity-90 rounded-xl p-3 sm:p-4 shadow-lg text-center">
@@ -146,7 +147,6 @@ const Garden = () => {
             This section would contain detailed analytics and insights about your garden performance, growth trends, and optimization recommendations.
           </p>
         </div>
-
       </div>
     </div>
   );
