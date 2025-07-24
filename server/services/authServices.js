@@ -1,8 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Vendor = require("../src/models/vendorDetailsModel");
-const VendorUser = require("../src/models/vendorUserModel");
-const VendorManager = require("../src/models/vendorManagerModel");
 const sendOTPEmail = require("../utils/sendOTPEmail");
 
 class AuthService {
@@ -18,14 +16,13 @@ class AuthService {
 
   static async signup(data) {
     const {
-      name, email, address, phone, adminCompanyName,
-      companyIncorporationNumber, country, password, roleId = 1
+      name, email, address, phone, 
+      country, password, roleId = 1
     } = data;
 
     const existingVendor = await Vendor.findOne({ where: { email } });
-    const existingUser = await VendorUser.findOne({ where: { email } });
-    const existingManager = await VendorManager.findOne({ where: { email } });
-    if (existingVendor || existingUser || existingManager) throw new Error("Email already registered");
+    
+    if (existingVendor) throw new Error("Email already registered");
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const id = await this.getNextAvailableId();
@@ -85,21 +82,7 @@ class AuthService {
    let user = await Vendor.findOne({ where: { email } });
 let userType = "admin";
 
-// Check for manager if not admin
-if (!user) {
-  user = await VendorManager.findOne({ where: { email } });
-  if (user) {
-    userType = "manager";
-  } else {
-    // Check for user if not manager
-    user = await VendorUser.findOne({
-      where: { email },
-      include: [{ model: Vendor, as: "vendorUsers" }]
-    });
-    if (!user) throw new Error("Invalid email");
-    userType = "user";
-  }
-}
+
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new Error("Invalid password");
@@ -123,40 +106,7 @@ if (!user) {
         userType: "admin"
       };
     } 
-    else if (userType === "manager") {
-  payload = {
-    id: user.id,
-    uuid: user.uuid,
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
-    adminUuid: user.adminUuid,
-    roleId: user.roleId,
-    role_id: user.roleId,
-    roleName: "manager",
-    userType: "manager"
-  };
-} 
-    else {
-      const vendorData = user.vendorUsers;
-      payload = {
-        id: user.id,
-        uuid: user.uuid,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        adminUuid: user.adminUuid,
-        adminCompanyName: vendorData?.adminCompanyName || null,
-        roleId: user.roleId,
-        role_id: user.roleId,
-        roleName: {
-          1: "admin",
-          2: "manager",
-          3: "user"
-        }[user.roleId] || "user",
-        userType: "user"
-      };
-    }
+    
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
@@ -184,57 +134,9 @@ if (!user) {
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await vendor.update({ password: hashedPassword, otpCode: null, otpExpiresAt: null });
-  }
-
-  static async getAdminProfile(adminUuid) {
-    const vendor = await Vendor.findOne({
-      where: { uuid: adminUuid },
-      attributes: [
-        "uuid",
-        "name",
-        "email",
-        "phone",
-        "address",
-        "adminCompanyName",
-        "companyIncorporationNumber",
-        "country",
-        "roleId"
-      ]
-    });
-
-    if (!vendor) {
-      throw new Error("Company Admin profile not found");
-    }
-
-    return vendor;
-  }
-
-  static async updateAdminProfile(adminUuid, updatedData) {
-  const vendor = await Vendor.findOne({ where: { uuid: adminUuid } });
-
-  if (!vendor) {
-    throw new Error("Admin not found");
-  }
-
-  const updatableFields = [
-    "name",
-    "email",
-    "phone",
-    "address",
-    "adminCompanyName",
-    "companyIncorporationNumber",
-    "country"
-  ];
-
-  for (const field of updatableFields) {
-    if (updatedData[field] !== undefined) {
-      vendor[field] = updatedData[field];
-    }
-  }
-
-  await vendor.save();
-
-  return vendor;
+  }  
+  
 }
-}
+
+
 module.exports = AuthService;

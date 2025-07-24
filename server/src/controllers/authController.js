@@ -46,38 +46,6 @@ class AuthController {
     }
   }
 
-  static async getAdminProfile(req, res) {
-    try {
-      const { adminUuid } = req.user;
-
-      const profile = await AuthService.getAdminProfile(adminUuid);
-
-      return res.status(StatusCodes.OK).json({
-        message: "Company Admin profile fetched successfully",
-        data: profile,
-      });
-    } catch (error) {
-      return res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
-    }
-  }
-
-  static async updateAdminProfile(req, res) {
-  try {
-    const { adminUuid } = req.user; 
-    const updatedData = req.body;
-
-    const updatedProfile = await AuthService.updateAdminProfile(adminUuid, updatedData);
-
-    return res.status(StatusCodes.OK).json({
-      message: "Profile updated successfully",
-      data: updatedProfile,
-    });
-  } catch (error) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: error.message });
-  }
-}
-
-
 }
 
 module.exports = AuthController;
