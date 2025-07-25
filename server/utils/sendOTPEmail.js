@@ -10,7 +10,7 @@ const sendOTPEmail = async (email, otp) => {
   });
 
   const mailOptions = {
-    from: `"STSS Support" <${process.env.SMTP_EMAIL}>`,
+    from: `"Smart Grow Support" <${process.env.SMTP_EMAIL}>`,
     to: email,
     subject: 'Your OTP for Password Reset',
     html: `<p>Your OTP is: <strong>${otp}</strong></p><p>It is valid for 5 minutes.</p>`

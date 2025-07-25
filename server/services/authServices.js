@@ -29,7 +29,7 @@ class AuthService {
 
     const newVendor = await Vendor.create({
       id, name, email, address, phone,
-      adminCompanyName, companyIncorporationNumber,
+      
       country, password: hashedPassword, roleId
     });
 
@@ -39,9 +39,7 @@ class AuthService {
       name: newVendor.name,
       email: newVendor.email,
       phone: newVendor.phone,
-      address: newVendor.address,
-      adminCompanyName: newVendor.adminCompanyName,
-      companyIncorporationNumber: newVendor.companyIncorporationNumber,
+      address: newVendor.address,     
       country: newVendor.country,
       roleId: newVendor.roleId,
       role_id: newVendor.roleId,
@@ -96,8 +94,6 @@ let userType = "admin";
         email: user.email,
         phone: user.phone,
         address: user.address,
-        adminCompanyName: user.adminCompanyName,
-        companyIncorporationNumber: user.companyIncorporationNumber,
         country: user.country,
         adminUuid: user.uuid,
         roleId: user.roleId,

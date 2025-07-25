@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const axios = require("axios"); // Import axios for making HTTP requests
 const cron = require("node-cron");
+require("dotenv").config();
 
 const sequelize = require("./config/db"); // Sequelize DB connection
 const { exec } = require("child_process"); // To run shell commands
@@ -13,7 +14,7 @@ const path = require('path');
 dotenv.config();
 const app = express();
 
-//const indexRoutes = require("./routes/indexRoutes");
+const indexRoutes = require("./routes/indexRoutes");
 
 // Trust the first proxy (important for HTTPS and cookies)
 //app.set('trust proxy', 1);
@@ -38,7 +39,7 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.use(express.json());
 app.use(cookieParser())
-//app.use("/api/", indexRoutes);
+app.use("/api/", indexRoutes);
 
 
 

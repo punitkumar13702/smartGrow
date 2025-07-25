@@ -39,11 +39,7 @@ const Vendor = sequelize.define('vendorDetails', {
       return roles[this.getDataValue('roleId')] || "user";
     }
   },
-  userCreateLimit: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 3
-  },
+ 
   otpCode: {
     type: DataTypes.STRING,
     allowNull: true
