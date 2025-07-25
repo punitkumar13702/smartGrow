@@ -76,25 +76,25 @@ const FarmerSidebar = ({ isMobile = false, onClose = () => {} }) => {
         </div>
 
         {/* Farmer Badge - More compact */}
-        <div className="flex-shrink-0 mb-3">
+        <div className="flex-shrink-0 mb-3 mx-1">
           <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-2 rounded-lg text-center shadow-md">
             <div className="font-bold text-xs">🌾 FARMER MODE</div>
             <div className="text-xs opacity-90">Professional</div>
           </div>
         </div>
 
-        {/* Navigation - Scrollable with more compact items */}
-        <nav className="flex-1 min-h-0 overflow-y-auto space-y-2 mb-3">
+        {/* Navigation - Scrollable with fixed margins and no overflow */}
+        <nav className="flex-1 min-h-0 overflow-y-auto space-y-2 mb-3 mx-1">
           {navigationItems.map((item, index) => (
             <NavLink
               key={item.name}
               to={item.path}
               onClick={handleNavClick}
               className={({ isActive }) =>
-                `w-full flex items-center px-4 py-2.5 rounded-lg text-left transition-all duration-300 transform hover:scale-105 ${
+                `w-full flex items-center px-3 py-2.5 rounded-lg text-left transition-all duration-200 ${
                   isActive
-                    ? 'bg-white bg-opacity-30 text-white shadow-lg scale-105 backdrop-blur-sm border-2 border-white border-opacity-50'
-                    : 'text-white text-opacity-95 hover:bg-white hover:bg-opacity-20 hover:text-white hover:shadow-lg'
+                    ? 'bg-white bg-opacity-25 text-white shadow-lg backdrop-blur-sm border border-white border-opacity-30'
+                    : 'text-white text-opacity-95 hover:bg-white hover:bg-opacity-15 hover:text-white hover:shadow-md'
                 } text-sm`
               }
               style={{ 
@@ -103,7 +103,7 @@ const FarmerSidebar = ({ isMobile = false, onClose = () => {} }) => {
               }}
             >
               <item.icon className="w-5 h-5 mr-3 flex-shrink-0" />
-              <span className="font-semibold flex-1">{item.name}</span>
+              <span className="font-semibold flex-1 min-w-0">{item.name}</span>
               {item.isPro && (
                 <span className="ml-2 bg-amber-400 text-amber-900 text-xs px-1.5 py-0.5 rounded-full font-bold flex-shrink-0">
                   PRO
@@ -113,8 +113,8 @@ const FarmerSidebar = ({ isMobile = false, onClose = () => {} }) => {
           ))}
         </nav>
 
-        {/* Status and Footer - Much more compact */}
-        <div className="flex-shrink-0 space-y-2">
+        {/* Status and Footer - Contained within margins */}
+        <div className="flex-shrink-0 space-y-2 mx-1">
           {/* Status Indicator - Very compact */}
           <div 
             className="p-2.5 rounded-lg backdrop-blur-sm border border-white border-opacity-40 shadow-lg"
@@ -149,10 +149,10 @@ const FarmerSidebar = ({ isMobile = false, onClose = () => {} }) => {
     );
   }
 
-  // Desktop Sidebar - More compact layout
+  // Desktop Sidebar - Fixed margins and no overflow
   return (
     <div 
-      className="w-72 p-5 shadow-2xl border-r border-white border-opacity-20 h-full flex flex-col"
+      className="w-72 p-4 shadow-2xl border-r border-white border-opacity-20 h-full flex flex-col"
       style={{
         background: `linear-gradient(180deg, rgba(169, 244, 83, 0.80) 0%, rgba(51, 113, 10, 0.80) 100%)`,
       }}
@@ -162,14 +162,14 @@ const FarmerSidebar = ({ isMobile = false, onClose = () => {} }) => {
         <CustomSmartGrowLogo />
       </div>
 
-      {/* Farmer Badge - More compact */}
-      <div className="flex-shrink-0 mb-4 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-2 rounded-lg text-center shadow-md">
+      {/* Farmer Badge - Contained within margins */}
+      <div className="flex-shrink-0 mb-4 mx-1 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-2 rounded-lg text-center shadow-md">
         <div className="font-bold text-sm">🌾 FARMER MODE</div>
         <div className="text-xs opacity-90">Professional</div>
       </div>
 
-      {/* Navigation - Scrollable with more compact items */}
-      <nav className="flex-1 min-h-0 overflow-y-auto space-y-2 mb-4">
+      {/* Navigation - Contained within margins, no overflow */}
+      <nav className="flex-1 min-h-0 overflow-y-auto space-y-2 mb-4 mx-1">
         {navigationItems.map((item) => (
           <NavLink
             key={item.name}
@@ -177,13 +177,13 @@ const FarmerSidebar = ({ isMobile = false, onClose = () => {} }) => {
             className={({ isActive }) =>
               `w-full flex items-center px-3 py-2.5 rounded-lg text-left transition-all duration-200 ${
                 isActive
-                  ? 'bg-white bg-opacity-20 text-white shadow-lg transform scale-105 backdrop-blur-sm border border-white border-opacity-30'
-                  : 'text-white text-opacity-90 hover:bg-white hover:bg-opacity-10 hover:transform hover:scale-102 hover:text-white'
+                  ? 'bg-white bg-opacity-20 text-white shadow-lg backdrop-blur-sm border border-white border-opacity-30'
+                  : 'text-white text-opacity-90 hover:bg-white hover:bg-opacity-10 hover:text-white'
               }`
             }
           >
             <item.icon className="w-4 h-4 mr-3 flex-shrink-0" />
-            <span className="font-medium text-sm flex-1">{item.name}</span>
+            <span className="font-medium text-sm flex-1 min-w-0">{item.name}</span>
             {item.isPro && (
               <span className="ml-2 bg-amber-400 text-amber-900 text-xs px-1.5 py-0.5 rounded-full font-bold flex-shrink-0">
                 PRO
@@ -193,8 +193,8 @@ const FarmerSidebar = ({ isMobile = false, onClose = () => {} }) => {
         ))}
       </nav>
 
-      {/* Status section - More compact */}
-      <div className="flex-shrink-0 mb-3 p-3 bg-white bg-opacity-20 rounded-lg backdrop-blur-sm border border-white border-opacity-30">
+      {/* Status section - Contained within margins */}
+      <div className="flex-shrink-0 mb-3 mx-1 p-3 bg-white bg-opacity-20 rounded-lg backdrop-blur-sm border border-white border-opacity-30">
         <div className="flex items-center space-x-2 text-white text-sm">
           <div className="w-2 h-2 rounded-full bg-green-300 animate-pulse shadow-lg flex-shrink-0" />
           <span className="font-medium text-xs">System Online</span>
@@ -204,8 +204,8 @@ const FarmerSidebar = ({ isMobile = false, onClose = () => {} }) => {
         </div>
       </div>
 
-      {/* Footer - More compact */}
-      <div className="flex-shrink-0 text-center">
+      {/* Footer - Contained within margins */}
+      <div className="flex-shrink-0 text-center mx-1">
         <div className="text-white text-opacity-60 text-xs italic">
           "Growing Smart, Growing Green"
         </div>
