@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { Bell, Database, User, Save } from 'lucide-react';
+import { Bell, Database, User, Save, LogOut } from 'lucide-react';
+import { useUser } from '../context/UserContext';
 
 const Settings = () => {
   const [autoDispense, setAutoDispense] = useState(false);
   const [notifications, setNotifications] = useState(true);
   const [aiMode, setAIMode] = useState(false);
+  const { user, logout, isFarmer } = useUser();
 
   const handleSaveSettings = () => {
     alert('Settings saved!');
+  };
+
+  const handleLogout = () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      logout();
+    }
   };
 
   return (
@@ -47,7 +55,7 @@ const Settings = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
               <input
                 type="text"
-                defaultValue="Eren"
+                defaultValue={user?.name || "Demo User"}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
               />
             </div>
@@ -55,9 +63,23 @@ const Settings = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
               <input
                 type="email"
-                defaultValue="eren@smartgrow.com"
+                defaultValue={user?.email || "demo@smartgrow.com"}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 text-sm sm:text-base"
               />
+            </div>
+          </div>
+
+          {/* User Type Display */}
+          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-gray-700">Account Type:</span>
+              <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                isFarmer 
+                  ? 'bg-amber-100 text-amber-800' 
+                  : 'bg-blue-100 text-blue-800'
+              }`}>
+                {isFarmer ? '🌾 Farmer Account' : '🏠 Home User'}
+              </span>
             </div>
           </div>
         </div>
@@ -192,17 +214,28 @@ const Settings = () => {
             <p><strong>Version:</strong> 1.0.0</p>
             <p><strong>Build:</strong> 2025.07.22</p>
             <p><strong>Support:</strong> support@smartgrow.com</p>
+            {isFarmer && (
+              <p><strong>Edition:</strong> <span className="text-amber-600 font-semibold">Farmer Pro</span></p>
+            )}
           </div>
         </div>
 
-        {/* Save Button */}
-        <div className="flex justify-end pb-4 sm:pb-6">
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 pb-4 sm:pb-6">
           <button
             onClick={handleSaveSettings}
-            className="bg-green-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg flex items-center space-x-2 hover:bg-green-700 transition-colors shadow-lg w-full sm:w-auto justify-center text-sm sm:text-base"
+            className="bg-green-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg flex items-center justify-center space-x-2 hover:bg-green-700 transition-colors shadow-lg text-sm sm:text-base"
           >
             <Save className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Save Settings</span>
+          </button>
+          
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg flex items-center justify-center space-x-2 hover:bg-red-600 transition-colors shadow-lg text-sm sm:text-base"
+          >
+            <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span>Logout</span>
           </button>
         </div>
       </div>
