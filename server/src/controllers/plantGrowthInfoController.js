@@ -14,7 +14,7 @@ static async getUniquePlantNames(req, res) {
     console.error('Error fetching plant names:', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' });
   }
-}
+}  
 
     static async createPlant(req, res) {
     try {
